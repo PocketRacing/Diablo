@@ -2,363 +2,187 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kartaviy Empire</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kartaviy Empire 2.0</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#0b0f18;color:#fff;
+ font-family:Arial,sans-serif
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #10131c;
-  color: #fff;
+header{
+ padding:20px;background:#151c2b;
+ border-bottom:1px solid #303c54
 }
-
-header {
-  padding: 20px;
-  background: #191e2d;
-  border-bottom: 1px solid #30384c;
+h1{color:#ffd166;margin:0 0 10px}
+.balance{font-size:24px;color:#65f5a0;font-weight:bold}
+nav{
+ display:flex;gap:8px;overflow-x:auto;
+ padding:12px;background:#111827
 }
-
-h1 {
-  margin: 0 0 8px;
-  color: #ffd166;
+button{
+ padding:12px 16px;border:0;border-radius:10px;
+ background:#35445e;color:#fff;font-weight:bold;
+ cursor:pointer
 }
-
-.balance {
-  font-size: 22px;
-  font-weight: bold;
-  color: #65f5a0;
+button:hover{filter:brightness(1.3)}
+main{max-width:1100px;margin:auto;padding:20px}
+.page{display:none}
+.active{display:block}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px
 }
-
-nav {
-  display: flex;
-  gap: 8px;
-  padding: 12px;
-  overflow-x: auto;
-  background: #151a26;
+.card{
+ background:#182235;border:1px solid #303c54;
+ padding:18px;border-radius:16px
 }
-
-nav button {
-  white-space: nowrap;
+.price{color:#65f5a0;font-weight:bold;font-size:18px}
+.muted{color:#9ba9c0}
+.stat{font-size:25px;font-weight:bold}
+input,select{
+ width:100%;padding:12px;margin:8px 0;
+ border:0;border-radius:8px;
+ background:#303c54;color:white
 }
-
-button {
-  border: none;
-  border-radius: 10px;
-  padding: 12px 16px;
-  background: #30394f;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
+.log{
+ background:#080c14;padding:12px;
+ border-radius:10px;max-height:250px;
+ overflow-y:auto;line-height:1.7
 }
-
-button:hover {
-  filter: brightness(1.2);
-}
-
-button:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  padding: 20px;
-  border-radius: 16px;
-  background: #1c2333;
-  border: 1px solid #30384c;
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-.price {
-  color: #65f5a0;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.muted {
-  color: #9da8bd;
-}
-
-.stat {
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  margin: 8px 0;
-  background: #30394f;
-  color: white;
-}
-
-.log {
-  max-height: 240px;
-  overflow-y: auto;
-  padding: 12px;
-  border-radius: 10px;
-  background: #0b0e15;
-  line-height: 1.7;
-}
-
-.win {
-  color: #65f5a0;
-}
-
-.loss {
-  color: #ff7777;
-}
-
-.gold {
-  color: #ffd166;
-}
-
-.danger {
-  background: #9b3b49;
-}
-
-footer {
-  text-align: center;
-  color: #77839b;
-  padding: 30px;
-}
+.win{color:#65f5a0}
+.loss{color:#ff7777}
+.small{font-size:13px;color:#9ba9c0}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>👑 Kartaviy Empire</h1>
-  <div class="muted">Твоя виртуальная империя</div>
-  <div class="balance" id="balance">₽ 500 000</div>
-  <div class="muted" id="income">Доход: ₽ 0 / день</div>
+<h1>👑 Kartaviy Empire</h1>
+<div class="muted">Твоя виртуальная империя</div>
+<div class="balance" id="balance">₽ 500 000</div>
+<div class="muted" id="income">Доход: ₽ 0 / день</div>
 </header>
 
 <nav>
-  <button onclick="showPage('home')">🏠 Главная</button>
-  <button onclick="showPage('casino')">🎰 Казино</button>
-  <button onclick="showPage('cars')">🚗 Машины</button>
-  <button onclick="showPage('business')">🏢 Бизнес</button>
-  <button onclick="showPage('property')">🏡 Недвижимость</button>
-  <button onclick="showPage('bank')">🏦 Банк</button>
+<button onclick="page('home')">🏠 Главная</button>
+<button onclick="page('casino')">🎰 Казино</button>
+<button onclick="page('cars')">🚗 Машины</button>
+<button onclick="page('business')">🏢 Бизнес</button>
+<button onclick="page('property')">🏡 Недвижимость</button>
+<button onclick="page('bank')">🏦 Банк</button>
 </nav>
 
 <main>
 
-<!-- ГЛАВНАЯ -->
-
 <section id="home" class="page active">
-
-<h2>📊 Твоя империя</h2>
+<h2>📊 Империя</h2>
 
 <div class="grid">
-
-<div class="card">
-  <div class="muted">💰 Деньги</div>
-  <div class="stat" id="statMoney">₽ 500 000</div>
-</div>
-
-<div class="card">
-  <div class="muted">🚗 Машины</div>
-  <div class="stat" id="statCars">0</div>
-</div>
-
-<div class="card">
-  <div class="muted">🏢 Бизнесы</div>
-  <div class="stat" id="statBusiness">0</div>
-</div>
-
-<div class="card">
-  <div class="muted">🏡 Недвижимость</div>
-  <div class="stat" id="statProperty">0</div>
-</div>
-
-<div class="card">
-  <div class="muted">⭐ Репутация</div>
-  <div class="stat" id="statRep">0</div>
-</div>
-
-<div class="card">
-  <div class="muted">📅 День</div>
-  <div class="stat" id="statDay">1</div>
-</div>
-
+<div class="card">💰 Деньги<div class="stat" id="sMoney"></div></div>
+<div class="card">🚗 Машины<div class="stat" id="sCars"></div></div>
+<div class="card">🏢 Бизнесы<div class="stat" id="sBiz"></div></div>
+<div class="card">🏡 Недвижимость<div class="stat" id="sProp"></div></div>
+<div class="card">⭐ Репутация<div class="stat" id="sRep"></div></div>
+<div class="card">📅 День<div class="stat" id="sDay"></div></div>
 </div>
 
 <br>
 
 <div class="card">
-<h3>📅 Управление временем</h3>
-<p class="muted">Продвигай день и получай доход от бизнеса.</p>
+<h3>⏳ Время</h3>
 <button onclick="nextDay()">⏩ Следующий день</button>
-<button onclick="randomEvent()">🎲 Случайное событие</button>
+<button onclick="eventGame()">🎲 Событие</button>
 </div>
 
 <br>
 
 <div class="card">
-<h3>📜 История событий</h3>
+<h3>📜 История</h3>
 <div class="log" id="log"></div>
 </div>
-
 </section>
 
-
-<!-- КАЗИНО -->
 
 <section id="casino" class="page">
-
-<h2>🎰 Виртуальное казино</h2>
+<h2>🎰 Казино</h2>
+<p class="muted">Только виртуальные деньги.</p>
 
 <div class="card">
-<p class="muted">
-Только игровая валюта. Реальных денег и ставок нет.
-</p>
-
-<h3>🎲 Кубик удачи</h3>
-<p>Ставка удваивается при выпадении 4, 5 или 6.</p>
-
-<input type="number" id="diceBet"
-placeholder="Сумма ставки" min="100">
-
-<button onclick="diceGame()">Бросить кубик</button>
-
-<p id="diceResult"></p>
+<h3>🎲 Кубик</h3>
+<p>4–6: выигрыш x2. 1–3: проигрыш.</p>
+<input id="diceBet" type="number" placeholder="Ставка">
+<button onclick="dice()">Бросить</button>
+<p id="diceOut"></p>
 </div>
 
 <br>
 
 <div class="card">
-<h3>🎰 Однорукий бандит</h3>
-<p>Три одинаковых символа — выигрыш.</p>
-
-<input type="number" id="slotBet"
-placeholder="Сумма ставки" min="100">
-
-<button onclick="slotGame()">Крутить</button>
-
-<h2 id="slotResult">❔ ❔ ❔</h2>
+<h3>🎰 Слоты</h3>
+<input id="slotBet" type="number" placeholder="Ставка">
+<button onclick="slots()">Крутить</button>
+<h2 id="slotOut">❔ ❔ ❔</h2>
 </div>
 
 <br>
 
 <div class="card">
-<h3>🃏 Красное или чёрное</h3>
-<p>Угадай цвет карты и получи x2.</p>
-
-<input type="number" id="cardBet"
-placeholder="Сумма ставки" min="100">
-
-<button onclick="cardGame('red')">🔴 Красное</button>
-<button onclick="cardGame('black')">⚫ Чёрное</button>
-
-<p id="cardResult"></p>
+<h3>🔴 Рулетка</h3>
+<p>Угадай цвет. Выплата x2.</p>
+<input id="rouletteBet" type="number" placeholder="Ставка">
+<button onclick="roulette('red')">🔴 Красное</button>
+<button onclick="roulette('black')">⚫ Чёрное</button>
+<p id="rouletteOut"></p>
 </div>
-
 </section>
 
-
-<!-- МАШИНЫ -->
 
 <section id="cars" class="page">
-
 <h2>🚗 Автосалон</h2>
-
-<div class="grid" id="carList"></div>
-
+<div class="grid" id="carsList"></div>
 <br>
-
 <div class="card">
-<h3>🚘 Твой гараж</h3>
-<div id="garage">Пока пусто</div>
+<h3>🚘 Гараж</h3>
+<div id="garage"></div>
 </div>
-
 </section>
 
-
-<!-- БИЗНЕС -->
 
 <section id="business" class="page">
-
-<h2>🏢 Бизнес-центр</h2>
-
-<p class="muted">
-Покупай бизнесы и получай ежедневный доход.
-</p>
-
-<div class="grid" id="businessList"></div>
-
+<h2>🏢 Бизнес</h2>
+<div class="grid" id="bizList"></div>
 <br>
-
 <div class="card">
-<h3>📈 Твои предприятия</h3>
-<div id="ownedBusiness">Пока нет бизнесов</div>
+<h3>📈 Мои предприятия</h3>
+<div id="myBiz"></div>
 </div>
-
 </section>
 
-
-<!-- НЕДВИЖИМОСТЬ -->
 
 <section id="property" class="page">
-
 <h2>🏡 Недвижимость</h2>
-
-<div class="grid" id="propertyList"></div>
-
+<div class="grid" id="propList"></div>
 <br>
-
 <div class="card">
-<h3>🏠 Твоя недвижимость</h3>
-<div id="ownedProperty">Пока нет недвижимости</div>
+<h3>🏠 Моя недвижимость</h3>
+<div id="myProp"></div>
 </div>
-
 </section>
 
 
-<!-- БАНК -->
-
 <section id="bank" class="page">
-
 <h2>🏦 Банк</h2>
 
 <div class="card">
-<h3>💰 Твой банковский счёт</h3>
-<div class="stat" id="bankMoney">₽ 0</div>
-<p class="muted">Банковский депозит приносит 1% за игровой день.</p>
+<h3>💳 Баланс банка</h3>
+<div class="stat" id="bankBalance"></div>
+<p class="muted">Вклад: 1% за игровой день.</p>
 
-<input type="number" id="depositAmount"
-placeholder="Сумма">
+<input id="bankAmount" type="number" placeholder="Сумма">
 
 <button onclick="deposit()">Положить</button>
 <button onclick="withdraw()">Снять</button>
@@ -367,850 +191,263 @@ placeholder="Сумма">
 <br>
 
 <div class="card">
-<h3>📊 Статистика</h3>
-<p id="stats"></p>
+<h3>💸 Кредит</h3>
+<p>Получить кредит ₽100 000.</p>
+<button onclick="loan()">Взять кредит</button>
+<p id="loanInfo"></p>
 </div>
-
 </section>
 
 </main>
 
-<footer>
-Kartaviy Empire © 2026
-</footer>
-
-
 <script>
+const $=id=>document.getElementById(id);
+const money=n=>"₽ "+Math.floor(n).toLocaleString("ru-RU");
 
-// =========================
-// СОСТОЯНИЕ ИГРЫ
-// =========================
-
-let game = {
-  money: 500000,
-  bank: 0,
-  day: 1,
-  reputation: 0,
-  cars: [],
-  businesses: [],
-  properties: [],
-  totalIncome: 0,
-  totalSpent: 0
+let game={
+ money:500000,bank:0,day:1,rep:0,
+ cars:[],biz:[],props:[],loans:0
 };
 
-
-// =========================
-// ДАННЫЕ
-// =========================
-
-const cars = [
-  {
-    name: "🚗 Lada Vesta",
-    price: 850000
-  },
-  {
-    name: "🚘 BMW 5 Series",
-    price: 3500000
-  },
-  {
-    name: "🏎️ Porsche 911",
-    price: 12000000
-  },
-  {
-    name: "🚙 Mercedes G-Class",
-    price: 18000000
-  },
-  {
-    name: "🏁 Lamborghini Huracan",
-    price: 25000000
-  },
-  {
-    name: "👑 Bugatti Chiron",
-    price: 250000000
-  }
+const cars=[
+["Lada Vesta",850000],
+["BMW 5 Series",3500000],
+["Porsche 911",12000000],
+["Mercedes G-Class",18000000],
+["Lamborghini",25000000],
+["Bugatti Chiron",250000000]
 ];
 
-const businesses = [
-  {
-    name: "☕ Кофейня",
-    price: 300000,
-    income: 15000
-  },
-  {
-    name: "🍔 Фастфуд",
-    price: 1200000,
-    income: 50000
-  },
-  {
-    name: "🏪 Супермаркет",
-    price: 5000000,
-    income: 180000
-  },
-  {
-    name: "🏨 Отель",
-    price: 15000000,
-    income: 550000
-  },
-  {
-    name: "🏭 Завод",
-    price: 60000000,
-    income: 2000000
-  },
-  {
-    name: "🏦 Финансовая компания",
-    price: 200000000,
-    income: 7000000
-  }
+const businesses=[
+["☕ Кофейня",300000,15000],
+["🍔 Фастфуд",1200000,50000],
+["🏪 Супермаркет",5000000,180000],
+["🏨 Отель",15000000,550000],
+["🏭 Завод",60000000,2000000],
+["🏦 Финансовая компания",200000000,7000000]
 ];
 
-const properties = [
-  {
-    name: "🏠 Комната",
-    price: 700000,
-    income: 3000
-  },
-  {
-    name: "🏡 Квартира",
-    price: 6000000,
-    income: 25000
-  },
-  {
-    name: "🏢 Пентхаус",
-    price: 35000000,
-    income: 150000
-  },
-  {
-    name: "🏰 Особняк",
-    price: 120000000,
-    income: 500000
-  },
-  {
-    name: "🏝️ Частный остров",
-    price: 800000000,
-    income: 3000000
-  }
+const properties=[
+["🏠 Комната",700000,3000],
+["🏡 Квартира",6000000,25000],
+["🏢 Пентхаус",35000000,150000],
+["🏰 Особняк",120000000,500000],
+["🏝️ Остров",800000000,3000000]
 ];
 
-
-// =========================
-// ФОРМАТ ДЕНЕГ
-// =========================
-
-function money(value) {
-  return "₽ " + Math.floor(value).toLocaleString("ru-RU");
+function page(id){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ $(id).classList.add("active");
 }
 
-
-// =========================
-// НАВИГАЦИЯ
-// =========================
-
-function showPage(page) {
-  document.querySelectorAll(".page").forEach(section => {
-    section.classList.remove("active");
-  });
-
-  document.getElementById(page).classList.add("active");
+function log(text,type=""){
+ const d=document.createElement("div");
+ d.className=type;
+ d.textContent="День "+game.day+": "+text;
+ $("log").prepend(d);
 }
 
-
-// =========================
-// ЛОГ
-// =========================
-
-function log(message, type = "") {
-
-  const logBox = document.getElementById("log");
-
-  const entry = document.createElement("div");
-
-  entry.className = type;
-
-  entry.textContent = "День " + game.day + ": " + message;
-
-  logBox.prepend(entry);
+function income(){
+ return game.biz.reduce((s,i)=>s+businesses[i][2],0)+
+ game.props.reduce((s,i)=>s+properties[i][2],0);
 }
 
+function update(){
+ $("balance").textContent=money(game.money);
+ $("income").textContent="Доход: "+money(income())+" / день";
 
-// =========================
-// ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
-// =========================
+ $("sMoney").textContent=money(game.money);
+ $("sCars").textContent=game.cars.length;
+ $("sBiz").textContent=game.biz.length;
+ $("sProp").textContent=game.props.length;
+ $("sRep").textContent=game.rep;
+ $("sDay").textContent=game.day;
+ $("bankBalance").textContent=money(game.bank);
+ $("loanInfo").textContent="Долг: "+money(game.loans);
 
-function updateUI() {
-
-  document.getElementById("balance").textContent = money(game.money);
-
-  document.getElementById("statMoney").textContent = money(game.money);
-
-  document.getElementById("bankMoney").textContent = money(game.bank);
-
-  document.getElementById("statCars").textContent = game.cars.length;
-
-  document.getElementById("statBusiness").textContent =
-    game.businesses.length;
-
-  document.getElementById("statProperty").textContent =
-    game.properties.length;
-
-  document.getElementById("statRep").textContent =
-    game.reputation;
-
-  document.getElementById("statDay").textContent =
-    game.day;
-
-  const income = calculateIncome();
-
-  document.getElementById("income").textContent =
-    "Доход: " + money(income) + " / день";
-
-  document.getElementById("stats").innerHTML = `
-    Дней прожито: ${game.day}<br>
-    Всего потрачено: ${money(game.totalSpent)}<br>
-    Общий доход: ${money(game.totalIncome)}<br>
-    Репутация: ${game.reputation}
-  `;
-
-  renderGarage();
-  renderOwnedBusiness();
-  renderOwnedProperty();
+ renderGarage();
+ renderMyBiz();
+ renderMyProp();
 }
 
-
-// =========================
-// ДОХОД
-// =========================
-
-function calculateIncome() {
-
-  let income = 0;
-
-  game.businesses.forEach(index => {
-    income += businesses[index].income;
-  });
-
-  game.properties.forEach(index => {
-    income += properties[index].income;
-  });
-
-  return income;
+function nextDay(){
+ game.day++;
+ let inc=income();
+ game.money+=inc;
+ game.bank*=1.01;
+ log("Доход: "+money(inc)+". Проценты банка начислены.","win");
+ update();
+ save();
 }
 
+function eventGame(){
+ let events=[
+ ["Ты выиграл контракт!",150000],
+ ["Ремонт автомобиля.",-35000],
+ ["Инвестор вложил деньги.",500000],
+ ["Неожиданный подарок.",25000],
+ ["Штраф.",-15000]
+ ];
 
-// =========================
-// СЛЕДУЮЩИЙ ДЕНЬ
-// =========================
-
-function nextDay() {
-
-  game.day++;
-
-  const income = calculateIncome();
-
-  game.money += income;
-
-  game.totalIncome += income;
-
-  const bankIncome = game.bank * 0.01;
-
-  game.bank += bankIncome;
-
-  log(
-    "Получен доход: " +
-    money(income) +
-    ". Проценты банка: " +
-    money(bankIncome),
-    "win"
-  );
-
-  updateUI();
+ let e=events[Math.floor(Math.random()*events.length)];
+ game.money+=e[1];
+ if(e[1]>0)game.rep++;
+ log(e[0]+" "+money(e[1]),e[1]>0?"win":"loss");
+ update();save();
 }
 
-
-// =========================
-// СЛУЧАЙНЫЕ СОБЫТИЯ
-// =========================
-
-function randomEvent() {
-
-  const events = [
-
-    {
-      text: "Ты выиграл деловой контракт!",
-      amount: 150000
-    },
-
-    {
-      text: "Неожиданный ремонт автомобиля.",
-      amount: -35000
-    },
-
-    {
-      text: "Инвестор вложил деньги в твой бизнес.",
-      amount: 500000
-    },
-
-    {
-      text: "Ты нашёл старый сейф.",
-      amount: 25000
-    },
-
-    {
-      text: "Штраф за нарушение правил.",
-      amount: -15000
-    },
-
-    {
-      text: "Успешная рекламная кампания.",
-      amount: 100000
-    }
-
-  ];
-
-  const event = events[
-    Math.floor(Math.random() * events.length)
-  ];
-
-  game.money += event.amount;
-
-  if (event.amount > 0) {
-    game.reputation++;
-  }
-
-  log(
-    event.text + " " +
-    (event.amount >= 0 ? "+" : "") +
-    money(event.amount),
-    event.amount >= 0 ? "win" : "loss"
-  );
-
-  updateUI();
+function bet(id){
+ let n=Number($(id).value);
+ if(!Number.isFinite(n)||n<100||n>game.money){
+  alert("Минимум ₽100 и не больше твоего баланса.");
+  return 0;
+ }
+ return Math.floor(n);
 }
 
-
-// =========================
-// КАЗИНО
-// =========================
-
-function getBet(id) {
-
-  const value = Number(document.getElementById(id).value);
-
-  if (!Number.isFinite(value) || value < 100) {
-    alert("Минимальная ставка: ₽100");
-    return 0;
-  }
-
-  if (value > game.money) {
-    alert("Недостаточно денег!");
-    return 0;
-  }
-
-  return Math.floor(value);
+function dice(){
+ let b=bet("diceBet");if(!b)return;
+ game.money-=b;
+ let r=Math.floor(Math.random()*6)+1;
+ let win=r>=4?b*2:0;
+ game.money+=win;
+ $("diceOut").textContent="Выпало "+r+"! "+(win?money(win):"Проигрыш "+money(b));
+ log("Кубик: "+(win?money(win):"-"+money(b)),win?"win":"loss");
+ update();save();
 }
 
-
-// КУБИК
-
-function diceGame() {
-
-  const bet = getBet("diceBet");
-
-  if (!bet) return;
-
-  game.money -= bet;
-
-  const roll = Math.floor(Math.random() * 6) + 1;
-
-  let result = "";
-
-  if (roll >= 4) {
-
-    const win = bet * 2;
-
-    game.money += win;
-
-    result = "🎲 Выпало " + roll + "! Выигрыш " + money(win);
-
-    log(result, "win");
-
-  } else {
-
-    result = "🎲 Выпало " + roll + ". Ты проиграл " + money(bet);
-
-    log(result, "loss");
-
-  }
-
-  document.getElementById("diceResult").textContent = result;
-
-  updateUI();
+function slots(){
+ let b=bet("slotBet");if(!b)return;
+ game.money-=b;
+ let s=["🍒","🍋","🔔","💎","7️⃣"];
+ let r=[0,0,0].map(()=>s[Math.floor(Math.random()*s.length)]);
+ let win=0;
+ if(r[0]===r[1]&&r[1]===r[2])win=b*5;
+ else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2])win=b*2;
+ game.money+=win;
+ $("slotOut").textContent=r.join(" ");
+ log("Слоты: "+(win?"+"+money(win):"-"+money(b)),win?"win":"loss");
+ update();save();
 }
 
-
-// СЛОТЫ
-
-function slotGame() {
-
-  const bet = getBet("slotBet");
-
-  if (!bet) return;
-
-  game.money -= bet;
-
-  const symbols = ["🍒", "🍋", "🔔", "💎", "7️⃣"];
-
-  const result = [
-
-    symbols[Math.floor(Math.random() * symbols.length)],
-
-    symbols[Math.floor(Math.random() * symbols.length)],
-
-    symbols[Math.floor(Math.random() * symbols.length)]
-
-  ];
-
-  let win = 0;
-
-  if (result[0] === result[1] &&
-      result[1] === result[2]) {
-
-    win = bet * 5;
-
-  } else if (
-    result[0] === result[1] ||
-    result[1] === result[2] ||
-    result[0] === result[2]
-  ) {
-
-    win = bet * 2;
-
-  }
-
-  game.money += win;
-
-  document.getElementById("slotResult").textContent =
-    result.join(" ");
-
-  if (win > 0) {
-
-    log(
-      "Слоты: выигрыш " + money(win),
-      "win"
-    );
-
-  } else {
-
-    log(
-      "Слоты: проигрыш " + money(bet),
-      "loss"
-    );
-
-  }
-
-  updateUI();
+function roulette(color){
+ let b=bet("rouletteBet");if(!b)return;
+ game.money-=b;
+ let win=Math.random()<.5;
+ if(win)game.money+=b*2;
+ $("rouletteOut").textContent=win?"🎉 Победа! "+money(b*2):"❌ Проигрыш";
+ log("Рулетка: "+(win?"победа":"проигрыш"),win?"win":"loss");
+ update();save();
 }
 
+function buy(type,i){
+ let data=type==="car"?cars[i]:type==="biz"?businesses[i]:properties[i];
+ let price=data[1];
 
-// КАРТА
+ if(game.money<price){alert("Недостаточно денег!");return;}
 
-function cardGame(color) {
+ game.money-=price;
+ game.rep++;
 
-  const bet = getBet("cardBet");
+ if(type==="car")game.cars.push(i);
+ if(type==="biz")game.biz.push(i);
+ if(type==="prop")game.props.push(i);
 
-  if (!bet) return;
-
-  game.money -= bet;
-
-  const result = Math.random() < 0.5 ? "red" : "black";
-
-  if (result === color) {
-
-    const win = bet * 2;
-
-    game.money += win;
-
-    document.getElementById("cardResult").textContent =
-      "🎉 Ты угадал! " + money(win);
-
-    log("Карта: выигрыш " + money(win), "win");
-
-  } else {
-
-    document.getElementById("cardResult").textContent =
-      "❌ Не угадал. Потеряно " + money(bet);
-
-    log("Карта: проигрыш " + money(bet), "loss");
-
-  }
-
-  updateUI();
+ log("Покупка: "+data[0],"win");
+ update();save();
 }
 
-
-// =========================
-// ПОКУПКА МАШИН
-// =========================
-
-function renderCars() {
-
-  const list = document.getElementById("carList");
-
-  list.innerHTML = "";
-
-  cars.forEach((car, index) => {
-
-    const card = document.createElement("div");
-
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${car.name}</h3>
-      <p class="price">${money(car.price)}</p>
-      <button>Купить</button>
-    `;
-
-    card.querySelector("button").onclick = () => buyCar(index);
-
-    list.appendChild(card);
-
-  });
-
+function renderCars(){
+ $("carsList").innerHTML=cars.map((c,i)=>`
+ <div class="card">
+ <h3>🚗 ${c[0]}</h3>
+ <p class="price">${money(c[1])}</p>
+ <button onclick="buy('car',${i})">Купить</button>
+ </div>`).join("");
 }
 
-
-function buyCar(index) {
-
-  const car = cars[index];
-
-  if (game.money < car.price) {
-
-    alert("Недостаточно денег!");
-
-    return;
-  }
-
-  game.money -= car.price;
-
-  game.cars.push(index);
-
-  game.totalSpent += car.price;
-
-  game.reputation += 1;
-
-  log("Куплена машина: " + car.name, "win");
-
-  updateUI();
+function renderGarage(){
+ $("garage").innerHTML=game.cars.length?
+ game.cars.map(i=>"<p>🚗 "+cars[i][0]+"</p>").join(""):
+ "Гараж пуст.";
 }
 
-
-function renderGarage() {
-
-  const garage = document.getElementById("garage");
-
-  if (!game.cars.length) {
-
-    garage.textContent = "Гараж пуст.";
-
-    return;
-  }
-
-  garage.innerHTML = game.cars.map(index => {
-
-    return `<p>🚗 ${cars[index].name}</p>`;
-
-  }).join("");
-
+function renderBiz(){
+ $("bizList").innerHTML=businesses.map((b,i)=>`
+ <div class="card">
+ <h3>${b[0]}</h3>
+ <p class="price">${money(b[1])}</p>
+ <p>Доход: ${money(b[2])} / день</p>
+ <button onclick="buy('biz',${i})">Купить</button>
+ </div>`).join("");
 }
 
-
-// =========================
-// ПОКУПКА БИЗНЕСА
-// =========================
-
-function renderBusinesses() {
-
-  const list = document.getElementById("businessList");
-
-  list.innerHTML = "";
-
-  businesses.forEach((business, index) => {
-
-    const card = document.createElement("div");
-
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${business.name}</h3>
-      <p class="price">${money(business.price)}</p>
-      <p>Доход: ${money(business.income)} / день</p>
-      <button>Купить</button>
-    `;
-
-    card.querySelector("button").onclick = () =>
-      buyBusiness(index);
-
-    list.appendChild(card);
-
-  });
-
+function renderMyBiz(){
+ $("myBiz").innerHTML=game.biz.length?
+ game.biz.map(i=>`<p>🏢 ${businesses[i][0]} — ${money(businesses[i][2])}/день</p>`).join(""):
+ "Бизнесов пока нет.";
 }
 
-
-function buyBusiness(index) {
-
-  const business = businesses[index];
-
-  if (game.money < business.price) {
-
-    alert("Недостаточно денег!");
-
-    return;
-  }
-
-  game.money -= business.price;
-
-  game.businesses.push(index);
-
-  game.totalSpent += business.price;
-
-  game.reputation += 5;
-
-  log("Куплен бизнес: " + business.name, "win");
-
-  updateUI();
+function renderProps(){
+ $("propList").innerHTML=properties.map((p,i)=>`
+ <div class="card">
+ <h3>${p[0]}</h3>
+ <p class="price">${money(p[1])}</p>
+ <p>Доход: ${money(p[2])} / день</p>
+ <button onclick="buy('prop',${i})">Купить</button>
+ </div>`).join("");
 }
 
-
-function renderOwnedBusiness() {
-
-  const box = document.getElementById("ownedBusiness");
-
-  if (!game.businesses.length) {
-
-    box.textContent = "У тебя пока нет бизнесов.";
-
-    return;
-  }
-
-  box.innerHTML = game.businesses.map(index => {
-
-    const business = businesses[index];
-
-    return `
-      <p>
-        🏢 ${business.name}
-        — ${money(business.income)} / день
-      </p>
-    `;
-
-  }).join("");
-
+function renderMyProp(){
+ $("myProp").innerHTML=game.props.length?
+ game.props.map(i=>`<p>🏡 ${properties[i][0]} — ${money(properties[i][2])}/день</p>`).join(""):
+ "Недвижимости пока нет.";
 }
 
-
-// =========================
-// НЕДВИЖИМОСТЬ
-// =========================
-
-function renderProperties() {
-
-  const list = document.getElementById("propertyList");
-
-  list.innerHTML = "";
-
-  properties.forEach((property, index) => {
-
-    const card = document.createElement("div");
-
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${property.name}</h3>
-      <p class="price">${money(property.price)}</p>
-      <p>Доход: ${money(property.income)} / день</p>
-      <button>Купить</button>
-    `;
-
-    card.querySelector("button").onclick = () =>
-      buyProperty(index);
-
-    list.appendChild(card);
-
-  });
-
+function deposit(){
+ let n=Number($("bankAmount").value);
+ if(n<=0||n>game.money){alert("Некорректная сумма.");return;}
+ game.money-=n;game.bank+=n;
+ log("Вклад: "+money(n),"win");update();save();
 }
 
-
-function buyProperty(index) {
-
-  const property = properties[index];
-
-  if (game.money < property.price) {
-
-    alert("Недостаточно денег!");
-
-    return;
-  }
-
-  game.money -= property.price;
-
-  game.properties.push(index);
-
-  game.totalSpent += property.price;
-
-  game.reputation += 3;
-
-  log("Куплена недвижимость: " + property.name, "win");
-
-  updateUI();
+function withdraw(){
+ let n=Number($("bankAmount").value);
+ if(n<=0||n>game.bank){alert("Некорректная сумма.");return;}
+ game.bank-=n;game.money+=n;
+ log("Снятие: "+money(n),"win");update();save();
 }
 
-
-function renderOwnedProperty() {
-
-  const box = document.getElementById("ownedProperty");
-
-  if (!game.properties.length) {
-
-    box.textContent = "Недвижимости пока нет.";
-
-    return;
-  }
-
-  box.innerHTML = game.properties.map(index => {
-
-    const property = properties[index];
-
-    return `
-      <p>
-        🏡 ${property.name}
-        — ${money(property.income)} / день
-      </p>
-    `;
-
-  }).join("");
-
+function loan(){
+ if(game.loans>0){alert("Сначала погаси текущий кредит.");return;}
+ game.money+=100000;
+ game.loans=120000;
+ log("Получен кредит ₽100 000. Вернуть ₽120 000.","win");
+ update();save();
 }
 
-
-// =========================
-// БАНК
-// =========================
-
-function deposit() {
-
-  const amount = Number(
-    document.getElementById("depositAmount").value
-  );
-
-  if (!Number.isFinite(amount) ||
-      amount <= 0 ||
-      amount > game.money) {
-
-    alert("Некорректная сумма.");
-
-    return;
-  }
-
-  game.money -= amount;
-
-  game.bank += amount;
-
-  log("Пополнение банка: " + money(amount), "win");
-
-  updateUI();
+function save(){
+ localStorage.setItem("kartaviyEmpire2",JSON.stringify(game));
 }
 
-
-function withdraw() {
-
-  const amount = Number(
-    document.getElementById("depositAmount").value
-  );
-
-  if (!Number.isFinite(amount) ||
-      amount <= 0 ||
-      amount > game.bank) {
-
-    alert("Некорректная сумма.");
-
-    return;
-  }
-
-  game.bank -= amount;
-
-  game.money += amount;
-
-  log("Снятие из банка: " + money(amount), "win");
-
-  updateUI();
+function load(){
+ let x=localStorage.getItem("kartaviyEmpire2");
+ if(x){
+  try{
+   game={...game,...JSON.parse(x)};
+  }catch(e){}
+ }
 }
 
-
-// =========================
-// СОХРАНЕНИЕ
-// =========================
-
-function saveGame() {
-
-  localStorage.setItem(
-    "kartaviyEmpire",
-    JSON.stringify(game)
-  );
-
-}
-
-
-function loadGame() {
-
-  const saved = localStorage.getItem("kartaviyEmpire");
-
-  if (saved) {
-
-    try {
-
-      const data = JSON.parse(saved);
-
-      if (data && typeof data === "object") {
-
-        game = {
-          ...game,
-          ...data
-        };
-
-      }
-
-    } catch (error) {
-
-      console.warn("Не удалось загрузить сохранение.");
-
-    }
-
-  }
-
-}
-
-
-// =========================
-// ЗАПУСК
-// =========================
-
-loadGame();
-
+load();
 renderCars();
+renderBiz();
+renderProps();
+update();
+log("Добро пожаловать в Kartaviy Empire 2.0!","win");
 
-renderBusinesses();
-
-renderProperties();
-
-updateUI();
-
-log("Добро пожаловать в Kartaviy Empire!");
-
-setInterval(saveGame, 5000);
-
-window.addEventListener("beforeunload", saveGame);
-
+setInterval(save,5000);
+window.addEventListener("beforeunload",save);
 </script>
 
 </body>
